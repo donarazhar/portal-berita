@@ -36,7 +36,8 @@ class AuthorResource extends Resource
             ->components([
                 TextInput::make('name')->required(),
                 TextInput::make('username')->required(),
-                FileUpload::make('avatar')->image()->required(),
+                FileUpload::make('avatar')->required()->image()->directory('file-avatar')
+                    ->visibility('public'),
                 Textarea::make('bio')->required(),
             ]);
     }
@@ -46,7 +47,7 @@ class AuthorResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('avatar')
-                    ->circular()
+                    ->circular()->visibility('public')
                     ->width(50),
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('username')->sortable()->searchable(),

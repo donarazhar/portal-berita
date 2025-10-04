@@ -4,7 +4,7 @@
          <!-- Logo dan Menu -->
          <div class="flex items-center justify-between w-full lg:w-auto">
              <!-- Logo -->
-             <a href="index.html">
+             <a href="{{ route('landing') }}" class="flex items-center gap-2">
                  <div class="flex items-center gap-2">
                      <img src="{{ asset('assets/img/LogoYPIAS.png') }}" alt="Logo" class="w-8 lg:w-10">
                      <p class="text-lg lg:text-xl font-bold">Portal Berita</p>
@@ -20,12 +20,16 @@
              class="hidden lg:flex flex-col lg:flex-row lg:items-center lg:gap-10 w-full lg:w-auto mt-5 lg:mt-0">
              <ul
                  class="flex flex-col lg:flex-row items-start lg:items-center gap-4 font-medium text-base w-full lg:w-auto">
-                 <li><a href="index.html" class="text-primary hover:text-gray-600">Beranda</a></li>
-                 <li><a href="gayahidup.html" class="hover:text-primary">Gaya Hidup</a></li>
-                 <li><a href="olahraga.html" class="hover:text-primary">Olahraga</a></li>
-                 <li><a href="kesehatan.html" class="hover:text-primary">Kesehatan</a></li>
-                 <li><a href="politik.html" class="hover:text-primary">Politik</a></li>
-                 <li><a href="pariwisata.html" class="hover:text-primary">Pariwisata</a></li>
+                 <li><a href="{{ route('landing') }}"
+                         class="{{ request()->is('/') ? 'text-primary' : '' }} hover:text-gray-600">Beranda</a></li>
+                 @foreach (\App\Models\NewsCategory::all() as $category)
+                     <li>
+                         <a href="{{ route('news.category', $category->slug) }}"
+                             class="{{ request()->is('categories/' . $category->slug) ? 'text-primary' : '' }} hover:text-primary">
+                             {{ $category->title }}
+                         </a>
+                     </li>
+                 @endforeach
              </ul>
          </div>
      </div>
